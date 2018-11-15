@@ -35,4 +35,13 @@ export class TableComponent implements OnInit {
     }
     return JSON.parse(localStorage.getItem('statistic'));
   }
+  onClick(e) {
+    if ('X' === e.target.innerHTML || 'O' === e.target.innerHTML) {
+      return false;
+    }
+    const {c, r} = e.target.dataset;
+    this.table[r][c] = this.player;
+    // e.target.innerHTML = this.player;
+    this.player = this.player === 'X' ? 'O' : 'X';
+  }
 }

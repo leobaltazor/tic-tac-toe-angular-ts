@@ -2,8 +2,9 @@
 
 <table>
   <tr *ngFor="let row of table; let r=index">
-    <td *ngFor="let column of row; let c=index">
-      {{ 1+r }} {{ 1+c }}
+    <td *ngFor="let column of row; let c=index" (click)="onClick($event)"
+      [attr.data-r]="r" [attr.data-c]="c">
+      <!-- {{ 1+r }} {{ 1+c }} -->
     </td>
   </tr>
 </table>
@@ -11,3 +12,8 @@
 <pre>
   {{ statistic | json }}
 </pre>
+
+<pre>
+  {{ table | json }}
+</pre>
+
