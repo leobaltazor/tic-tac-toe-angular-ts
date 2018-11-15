@@ -7,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableComponent implements OnInit {
   player: string;
-  statistic: {};
+  statistic: {
+    winX: number,
+    winO: number,
+    sumGame: number
+  };
+  table: [string[], string[], string[]];
   constructor() {
 
    }
@@ -20,14 +25,14 @@ export class TableComponent implements OnInit {
       sumGame: 0
     };
     this.statistic = this.initStatistic();
+    this.table = [['', '', ''], ['', '', ''], ['', '', '']];
   }
   initStatistic() {
-    return {w: '1'};
-  //   if (localStorage.getItem('statistic') !== null) {
-  //     return JSON.parse(localStorage.getItem('statistic'));
-  //   } else {
-  //     localStorage.setItem('statistic', JSON.stringify(this.statistic));
-  //   }
-  //   return JSON.parse(localStorage.getItem('statistic'));
+    if (localStorage.getItem('statistic') !== null) {
+      return JSON.parse(localStorage.getItem('statistic'));
+    } else {
+      localStorage.setItem('statistic', JSON.stringify(this.statistic));
+    }
+    return JSON.parse(localStorage.getItem('statistic'));
   }
 }

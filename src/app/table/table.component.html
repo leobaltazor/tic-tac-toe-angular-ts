@@ -1,8 +1,13 @@
-<p>
-  table works!
-</p>
+Ходит игрок {{ player }}
 
-{{ player }}
+<table>
+  <tr *ngFor="let row of table; let r=index">
+    <td *ngFor="let column of row; let c=index">
+      {{ 1+r }} {{ 1+c }}
+    </td>
+  </tr>
+</table>
+
 <pre>
   {{ statistic | json }}
 </pre>
