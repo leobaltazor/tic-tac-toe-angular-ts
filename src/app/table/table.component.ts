@@ -13,6 +13,8 @@ export class TableComponent implements OnInit {
     sumGame: number
   };
   table: [string[], string[], string[]];
+  statisticStr: string;
+  winnerStr: string;
   constructor() {
 
    }
@@ -36,13 +38,11 @@ export class TableComponent implements OnInit {
     return JSON.parse(localStorage.getItem('statistic'));
   }
   onClick(e) {
-    if ('X' === e.target.innerHTML || 'O' === e.target.innerHTML) {
-      return false;
-    }
     const {c, r} = e.target.dataset;
+    e.target.innerHTML = this.player;
     this.table[r][c] = this.player;
-    // e.target.innerHTML = this.player;
     this.whoseTurn();
+    this.whoWin();
   }
   whoseTurn(): void {
     this.player = this.player === 'X' ? 'O' : 'X';
@@ -52,26 +52,48 @@ export class TableComponent implements OnInit {
       let str = e.join('');
       this.gameOwer(str);
     });
-    for (var i = 0; i < 3; i++) {
-      var str = `${arr[0][i]}${arr[1][i]}${arr[2][i]}`;
-      gameOwer(str);
+    for (let i = 0; i < 3; i++) {
+      let str = `${this.table[0][i]}${this.table[1][i]}${this.table[2][i]}`;
+      this.gameOwer(str);
     }
-    var str = `${arr[0][0]}${arr[1][1]}${arr[2][2]}`;
-    gameOwer(str);
-    var str = `${arr[2][0]}${arr[1][1]}${arr[0][2]}`;
-    gameOwer(str);
+    let str = `${this.table[0][0]}${this.table[1][1]}${this.table[2][2]}`;
+    this.gameOwer(str);
+    let str = `${this.table[2][0]}${this.table[1][1]}${this.table[0][2]}`;
+    this.gameOwer(str);
   }
   gameOwer(str) {
     setTimeout(() => {
-      if (str === "XXX") {
-        stat(1, 0);
-        confirmm(str[0]);
-        _whoseTurn.innerHTML = "Победил игрок X";
-      } else if (str === "OOO") {
-        confirmm(str[0]);
-        stat(0, 1);
-        _whoseTurn.innerHTML = "Победил игрок О";
+      if (str === 'XXX') {
+        this.stat(1, 0);
+        this.confirmm(str[0]);
+        this.winnerStr = 'Победил игрок X';
+      } else if (str === 'OOO') {
+       this. confirmm(str[0]);
+        this.stat(0, 1);
+        this.winnerStr = 'Победил игрок О';
       }
     }, 100);
+  }
+  confirmm(data) {
+    if (confirm(`Победил ${data}.\nИграем еще?`)) {
+      window.location.reload();
+    } else {
+      console.log('endGame');
+
+    }
+  }
+  stat(data1, data2) {
+    this.statistic.winX += +data1;
+    this.statistic.winO += +data2;
+    this.statistic.sumGame++;
+    localStorage.setItem('statistic', JSON.stringify(this.statistic));
+    this.genStatistic();
+  }
+  genStatistic() {
+    let { winX: x, winO: o, sumGame: sum} = this.statistic;
+    sum = sum === 0 ? 1 : sum;
+    this.statisticStr = `<div>X побеждал в ${(x / sum * 100).toFixed(2)}%</div>
+    <div>O побеждал в ${(o / sum * 100).toFixed(2)}%</div>
+    <div>Всего ${sum} игр</div>`;
   }
 }
