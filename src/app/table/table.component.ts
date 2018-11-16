@@ -49,17 +49,17 @@ export class TableComponent implements OnInit {
   }
   whoWin() {
     this.table.forEach(e => {
-      let str = e.join('');
-      this.gameOwer(str);
+      const line = e.join('');
+      this.gameOwer(line);
     });
     for (let i = 0; i < 3; i++) {
-      let str = `${this.table[0][i]}${this.table[1][i]}${this.table[2][i]}`;
-      this.gameOwer(str);
+      const column = `${this.table[0][i]}${this.table[1][i]}${this.table[2][i]}`;
+      this.gameOwer(column);
     }
-    let str = `${this.table[0][0]}${this.table[1][1]}${this.table[2][2]}`;
-    this.gameOwer(str);
-    let str = `${this.table[2][0]}${this.table[1][1]}${this.table[0][2]}`;
-    this.gameOwer(str);
+    const diagonal = `${this.table[0][0]}${this.table[1][1]}${this.table[2][2]}`;
+    this.gameOwer(diagonal);
+    const diagonalRevers = `${this.table[2][0]}${this.table[1][1]}${this.table[0][2]}`;
+    this.gameOwer(diagonalRevers);
   }
   gameOwer(str) {
     setTimeout(() => {
