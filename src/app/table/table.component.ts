@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StateApp, State } from '../models/state-app.models';
 
 @Component({
   selector: 'app-table',
@@ -15,6 +16,7 @@ export class TableComponent implements OnInit {
   table: [string[], string[], string[]];
   statisticStr: string;
   winnerStr: string;
+  state: StateApp;
   constructor() {
 
    }
@@ -28,6 +30,7 @@ export class TableComponent implements OnInit {
     };
     this.statistic = this.initStatistic();
     this.table = [['', '', ''], ['', '', ''], ['', '', '']];
+    this.state = new State();
   }
   initStatistic() {
     if (localStorage.getItem('statistic') !== null) {
@@ -42,6 +45,7 @@ export class TableComponent implements OnInit {
     // e.target.innerHTML = this.player;
     if (this.table[r][c] === '') {
       this.table[r][c] = this.player;
+      this.state.table[r][c] = this.player;
       this.whoseTurn();
       this.whoWin();
     }
