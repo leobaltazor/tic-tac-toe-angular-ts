@@ -1,10 +1,10 @@
 Ходит игрок {{ player }}
 
 <table>
-  <tr *ngFor="let row of table; let r=index">
-    <td *ngFor="let column of row; let c=index" (click)="onClick($event)"
+  <tr *ngFor="let row of table; index as r">
+    <td *ngFor="let column of row; index as c" (click)="onClick($event)"
       [attr.data-r]="r" [attr.data-c]="c">
-      {{ r }} {{ c }}
+      {{ column }}
     </td>
   </tr>
 </table>

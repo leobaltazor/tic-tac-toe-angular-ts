@@ -40,9 +40,11 @@ export class TableComponent implements OnInit {
   onClick(e) {
     const {c, r} = e.target.dataset;
     // e.target.innerHTML = this.player;
-    this.table[r][c] = this.player;
-    this.whoseTurn();
-    this.whoWin();
+    if (this.table[r][c] === '') {
+      this.table[r][c] = this.player;
+      this.whoseTurn();
+      this.whoWin();
+    }
   }
   whoseTurn(): void {
     this.player = this.player === 'X' ? 'O' : 'X';
